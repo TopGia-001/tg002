@@ -57,7 +57,7 @@ export default function WinnersPage() {
                         className="my-2 md:my-4 px-8 py-2 md:px-14 md:py-4 border-[3px] md:border-[5px] border-white rounded-full bg-[#701318] shadow-2xl">
                         <span
                             className="shopee-extrabold text-white text-[26px] md:text-[56px] font-black leading-none block tracking-tighter">
-                            17h ngày 12/01/2026
+                            17h ngày 20/01/2026
                         </span>
                     </div>
 
@@ -67,7 +67,7 @@ export default function WinnersPage() {
                         drop-shadow-md"
                         style={{ paintOrder: 'stroke fill' }}
                     >
-                        Trên fanpage TOPGIA
+                        Trên fanpage TOPGIAKIDS
                     </h3>
                 </div>
 
