@@ -119,14 +119,12 @@ export default function BottomNavbar({ hideDecor = false }: { hideDecor?: boolea
                     className="w-full h-full"
                 >
                   <iframe
-                      src="/rules-kids.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                      src={`https://docs.google.com/viewer?url=${encodeURIComponent(
+                          window.location.origin + '/rules-kids.pdf'
+                      )}&embedded=true`}
                       className="w-full h-full border-none"
-                      title="Thể lệ"
-                  >
-                    <p>Trình duyệt của bạn không hỗ trợ xem PDF.
-                      <a href="/rules-kids.pdf" className="text-blue-600 underline">Nhấn vào đây để tải về.</a>
-                    </p>
-                  </iframe>
+                      title="Thể lệ chương trình"
+                  />
                 </object>
               </div>
 
