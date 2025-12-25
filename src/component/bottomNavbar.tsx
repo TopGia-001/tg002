@@ -9,6 +9,7 @@ import {
   HomeIcon,
   List,
   X,
+  Maximize2,
 } from 'lucide-react';
 
 export default function BottomNavbar({ hideDecor = false }: { hideDecor?: boolean }) {
@@ -79,25 +80,62 @@ export default function BottomNavbar({ hideDecor = false }: { hideDecor?: boolea
 
       {/* POPUP RULES */}
       {showRules && (
-        <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-sm flex items-center justify-center px-2">
-          <div className="relative w-full max-w-5xl h-[85dvh] bg-white rounded-xl overflow-hidden shadow-2xl">
+          <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-sm flex items-center justify-center px-2 md:px-4">
+            <div className="relative w-full max-w-5xl h-[90dvh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col">
 
-            {/* CLOSE */}
-            <button
-              onClick={() => setShowRules(false)}
-              className="absolute top-3 right-3 z-10 bg-black/70 text-white rounded-full p-2 hover:scale-110 transition"
-            >
-              <X size={24} />
-            </button>
+              {/* HEADER POPUP - Thêm thanh điều hướng nhỏ */}
+              <div className="bg-gray-100 px-4 py-2 flex justify-between items-center border-b">
+                <span className="font-bold text-gray-700 text-sm md:text-base">Thể lệ chương trình</span>
+                <div className="flex items-center gap-2">
+                  {/* NÚT MỞ TOÀN MÀN HÌNH: Giải pháp cho mobile không cuộn được */}
+                  <a
+                      href="/rules-kids.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-blue-600 text-white flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-blue-700 transition"
+                  >
+                    <Maximize2 size={16} />
+                    <span className="hidden md:inline">Xem toàn màn hình</span>
+                    <span className="md:hidden">Mở rộng</span>
+                  </a>
+                  <button
+                      onClick={() => setShowRules(false)}
+                      className="bg-gray-300 text-gray-700 rounded-lg p-1.5 hover:bg-gray-400 transition"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
 
-            {/* PDF */}
-            <iframe
-              src="/rules-kids.pdf"
-              className="w-full h-full"
-              title="Thể lệ chương trình"
-            />
+              {/* CONTAINER PDF */}
+              <div className="flex-1 w-full h-full overflow-y-auto bg-gray-200">
+                {/*
+                  Sử dụng thẻ <object> kết hợp <iframe>.
+                  Trên một số thiết bị, object hoạt động tốt hơn iframe cho PDF.
+               */}
+                <object
+                    data="/rules-kids.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                    type="application/pdf"
+                    className="w-full h-full"
+                >
+                  <iframe
+                      src="/rules-kids.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                      className="w-full h-full border-none"
+                      title="Thể lệ"
+                  >
+                    <p>Trình duyệt của bạn không hỗ trợ xem PDF.
+                      <a href="/rules-kids.pdf" className="text-blue-600 underline">Nhấn vào đây để tải về.</a>
+                    </p>
+                  </iframe>
+                </object>
+              </div>
+
+              {/* FOOTER POPUP - Nhắc người dùng cuộn hoặc mở rộng */}
+              <div className="md:hidden bg-yellow-50 px-4 py-2 text-[10px] text-center text-orange-800 font-medium">
+                Nếu không cuộn được, vui lòng nhấn nút <b>"Mở rộng"</b> ở trên để xem đầy đủ.
+              </div>
+            </div>
           </div>
-        </div>
       )}
     </>
   );
@@ -134,6 +172,7 @@ function NavItem({ icon, label, href, onClick, className = '' }: NavItemProps) {
           href={href}
           className="flex flex-col md:flex-row items-center justify-center w-full h-full px-1 py-1"
         >
+          {/* eslint-disable-next-line react-hooks/static-components */}
           <Content />
         </Link>
       ) : (
@@ -142,6 +181,7 @@ function NavItem({ icon, label, href, onClick, className = '' }: NavItemProps) {
           onClick={onClick}
           className="flex flex-col md:flex-row items-center justify-center w-full h-full px-1 py-1"
         >
+          {/* eslint-disable-next-line react-hooks/static-components */}
           <Content />
         </button>
       )}
