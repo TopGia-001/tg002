@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model RewardCode {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  code      String   @unique
+  brand     String
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Player {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  rewardCode  String   @unique
+  brand       String
+  fullName    String
+  phone       String
+  dob         String
+  address     String
+  createdAt   DateTime @default(now())
+}
+
+model CodeAttempt {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  code      String
+  createdAt DateTime @default(now())
+}
