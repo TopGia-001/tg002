@@ -9,20 +9,29 @@ import {
   HomeIcon,
   List,
   X,
-  Maximize2,
+  Loader2,
 } from 'lucide-react';
+import { Document as PDFDoc, Page as PDFPage, pdfjs } from 'react-pdf';
+import dynamic from "next/dynamic";
+
+const PdfViewer = dynamic(() => import('./pdfViewer'), {
+  ssr: false,
+  loading: () => <div className="p-10 text-center font-bold">Đang khởi tạo trình xem...</div>
+});
+
+
 
 export default function BottomNavbar({ hideDecor = false }: { hideDecor?: boolean }) {
   const [showRules, setShowRules] = useState(false);
-  //
-  // // Chặn scroll khi popup mở
-  // useEffect(() => {
-  //   if (showRules) {
-  //     document.body.style.overflow = 'hidden';
-  //   } else {
-  //     document.body.style.overflow = '';
-  //   }
-  // }, [showRules]);
+
+  // Chặn scroll khi popup mở
+  useEffect(() => {
+    if (showRules) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [showRules]);
 
   return (
     <>
@@ -80,25 +89,24 @@ export default function BottomNavbar({ hideDecor = false }: { hideDecor?: boolea
 
       {/* POPUP RULES */}
       {showRules && (
-        <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-sm flex items-center justify-center px-2">
-          <div className="relative w-full max-w-5xl h-[85dvh] bg-white rounded-xl overflow-hidden shadow-2xl">
+          <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-sm flex items-center justify-center px-2">
+            <div className="relative w-full max-w-5xl h-[85dvh] bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col">
 
-            {/* CLOSE */}
-            <button
-              onClick={() => setShowRules(false)}
-              className="absolute top-3 right-3 z-10 bg-black/70 text-white rounded-full p-2 hover:scale-110 transition"
-            >
-              <X size={24} />
-            </button>
+              {/* CLOSE BUTTON */}
+              <button
+                  onClick={() => setShowRules(false)}
+                  className="absolute top-3 right-3 z-[1000] bg-black/60 text-white rounded-full p-2 hover:scale-110 transition"
+              >
+                <X size={24} />
+              </button>
 
-            {/* PDF */}
-            <iframe
-              src="/rules-kids.pdf"
-              className="w-full h-full"
-              title="Thể lệ chương trình"
-            />
+              {/* VÙNG CHỨA PDF ĐÃ FIX LỖI SSR */}
+              <div className="flex-1 overflow-y-auto">
+                <PdfViewer file="/rules-kids.pdf" />
+              </div>
+
+            </div>
           </div>
-        </div>
       )}
     </>
   );
