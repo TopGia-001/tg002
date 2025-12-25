@@ -10,23 +10,23 @@ const Papa = require('papaparse');
 const prisma = new PrismaClient();
 
 async function main() {
-    const csvFile = fs.readFileSync('./khuyen_mai_25000_SEM.csv', 'utf8');
+    const csvFile = fs.readFileSync('./khuyen_mai_53000_KID.csv', 'utf8');
 
     Papa.parse(csvFile, {
         header: true,
         skipEmptyLines: true,
-        complete: async (results: any) => {
+        complete: async (results:any) => {
             console.log(`Đã đọc ${results.data.length} dòng từ file CSV...`);
 
             const dataToInsert = results.data
-                .map((item: any) => {
+                .map((item:any) => {
                     const rawCode = item.code || item.Code || item.CODE;
 
                     if (!rawCode) return null;
 
                     return {
                         code: rawCode.trim(),
-                        brand: "SEMI",
+                        brand: "KIDS",
                         isUsed: false
                     };
                 })
@@ -42,7 +42,7 @@ async function main() {
                     data: dataToInsert,
                     // skipDuplicates: true // Nếu DB của bạn hỗ trợ (MongoDB không hỗ trợ trực tiếp ở createMany)
                 });
-                console.log(`✅ Thành công! Đã nạp ${result.count} mã vào brand: TOPGIA`);
+                console.log(`✅ Thành công! Đã nạp ${result.count} mã vào brand: KIDS`);
             } catch (error) {
                 console.error("❌ Lỗi: ", error);
             }

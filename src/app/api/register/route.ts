@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function POST(request: Request) {
     try {
         const body = await request.json();
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             }
         });
 
-        if (attemptCount > 5) {
+        if (attemptCount > 3) {
             return NextResponse.json({ status: "EXCEED" }, { status: 429 });
         }
 

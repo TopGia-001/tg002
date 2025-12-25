@@ -5,8 +5,17 @@ import BottomNavbar from "@/src/component/bottomNavbar";
 import Link from "next/link";
 
 const PROMOTIONAL_PRODUCTS = [
-    { id: 1, name: "THÙNG GIẤY TẾT 20 GÓI", img: "/assets/Links/giay-tet.png" },
-    { id: 2, name: "COMBO CHĂM SÓC GIA ĐÌNH", img: "/assets/combo-csgd.webp" },
+    { id: 1, name: "M1-08", img: "/assets/Links/M1-08.png" },
+    { id: 2, name: "UVC 208", img: "/assets/Links/UVC208.png" },
+    { id: 3, name: "UVC 8879", img: "/assets/Links/UVC8879.png" },
+    { id: 4, name: "UVC M1-05", img: "/assets/Links/UVCM1-05.png" },
+    { id: 5, name: "T1-01", img: "/assets/Links/T1-01.png" },
+    { id: 6, name: "M2-03", img: "/assets/Links/M2-03.png" },
+    { id: 7, name: "M3-03", img: "/assets/Links/M3-03.png" },
+    { id: 8, name: "8166", img: "/assets/Links/8166.png" },
+    { id: 9, name: "T202", img: "/assets/Links/T202.png" },
+    { id: 10, name: "T1-02", img: "/assets/Links/T1-02.png" },
+    { id: 11, name: "4 Bịch bỉm", img: "/assets/Links/4bim.png" },
 ];
 
 export default function PromotionalProductsPage() {
@@ -38,7 +47,7 @@ export default function PromotionalProductsPage() {
             <main className="flex-1 flex flex-col min-h-0 z-10 relative">
 
                 {/* TITLE */}
-                <div className="shrink-0 flex justify-center pt-[8vh] pb-6 md:pt-[15vh] md:pb-10 px-4">
+                <div className="shrink-0 flex justify-center pt-[6vh] pb-4 md:pt-[12vh] md:pb-8 px-4">
                     <h1
                         className="shopee-extrabold text-center text-white uppercase font-black leading-tight tracking-wide
                             text-[20px] [-webkit-text-stroke:6px_#701318]
@@ -50,39 +59,39 @@ export default function PromotionalProductsPage() {
                     </h1>
                 </div>
 
-                <div className="w-full max-w-[1000px] mx-auto px-6 pb-[150px] pt-1 overflow-y-auto scrollbar-hide">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-                        {PROMOTIONAL_PRODUCTS.map((product) => (
-                            <div key={product.id} className="flex flex-col items-center group">
+                {/* PRODUCT LIST AREA */}
+                <div className="flex-1 overflow-y-auto pb-[150px] custom-scrollbar scrollbar-hide">
+                    <div className="w-full max-w-[1200px] mx-auto px-4">
+                        <div className="flex flex-wrap justify-start md:justify-center gap-3 md:gap-6">
+                            {PROMOTIONAL_PRODUCTS.map((product, index) => (
+                                <div
+                                    key={product.id}
+                                    className="w-[calc(50%-6px)] md:w-[calc(25%-18px)] bg-white rounded-[24px] md:rounded-[40px] p-3 md:p-5 shadow-xl flex flex-col"
+                                >
+                                    <div className="relative w-full aspect-square flex-shrink-0">
+                                        <Image
+                                            src={product.img}
+                                            alt={product.name}
+                                            fill
+                                            className="object-contain"
+                                            priority
+                                        />
+                                    </div>
 
-                                {/* WHITE BOX FOR IMAGE */}
-                                <div className="bg-white rounded-[32px] md:rounded-[45px] p-6 md:p-10 shadow-2xl w-full aspect-[4/3] flex items-center justify-center transition-transform group-hover:scale-105">
-                                    <div className="relative w-full h-full">
-                                        {product.img && (
-                                            <Image
-                                                src={product.img}
-                                                alt={product.name}
-                                                fill
-                                                className="object-contain"
-                                                priority
-                                            />
-                                        )}
+                                    <div className="mt-2 flex flex-col items-start">
+                                        <h2
+                                            className="shopee-bold text-black text-[20px] md:text-[32px] leading-tight text-left mt-1 line-clamp-2"
+                                            style={{
+                                                WebkitTextStroke: '4px white',
+                                                paintOrder: 'stroke fill'
+                                            }}
+                                        >
+                                            {product.name}
+                                        </h2>
                                     </div>
                                 </div>
-
-                                {/* PRODUCT NAME WITH STROKE */}
-                                <div className="mt-2 md:mt-4">
-                                    <h2 className="shopee-extrabold text-center text-white uppercase font-black tracking-tight
-                                        text-[18px] [-webkit-text-stroke:6px_#701318]
-                                        md:text-[28px] md:[-webkit-text-stroke:10px_#701318]
-                                        drop-shadow-md"
-                                        style={{ paintOrder: 'stroke fill' }}
-                                    >
-                                        {product.name}
-                                    </h2>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </main>
@@ -91,7 +100,6 @@ export default function PromotionalProductsPage() {
             <div className="fixed bottom-0 left-0 right-0 z-[60]">
                 <BottomNavbar hideDecor={true} />
             </div>
-
         </div>
     );
 }
