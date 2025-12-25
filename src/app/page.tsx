@@ -1,12 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Image from 'next/image';
 import { Home, MoreHorizontal, X } from 'lucide-react';
 import Link from "next/link";
 import BottomNavbar from "@/src/component/bottomNavbar";
+import dynamic from "next/dynamic";
+
+const PdfViewer = dynamic(() => import('@/src/component/pdfViewer'), {
+    ssr: false,
+    loading: () => <div className="p-10 text-center font-bold">Đang khởi tạo trình xem...</div>
+});
 
 export default function LandingPage() {
+    const [showRules, setShowRules] = useState(false);
+
+    // Chặn scroll khi popup mở
+    useEffect(() => {
+        if (showRules) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }, [showRules]);
     return (
         <div className="min-h-screen flex flex-col font-sans bg-[#8B0000] relative overflow-hidden">
 
@@ -22,7 +38,7 @@ export default function LandingPage() {
                     <div className="w-1/2 h-full relative"></div>
                     <div className="w-1/2 h-full relative">
                         <div className="absolute top-[60%] left-[10%]">
-                            <CtaButton />
+                            <CtaButton onRulesClick={() => setShowRules(true)}/>
                         </div>
                     </div>
                 </div>
@@ -52,23 +68,41 @@ export default function LandingPage() {
                 <div className="absolute left-0 w-full flex justify-center z-10 px-4
                     bottom-[18%]
                     md:bottom-[10%]">
-                    <CtaButton mobile />
+                    <CtaButton mobile onRulesClick={() => setShowRules(true)}/>
                 </div>
             </div>
+
+            {showRules && (
+                <div className="fixed inset-0 z-[1000] bg-black/80 backdrop-blur-sm flex items-center justify-center px-2">
+                    <div className="relative w-full max-w-5xl h-[85dvh] bg-white rounded-xl overflow-hidden shadow-2xl flex flex-col">
+
+                        <button
+                            onClick={() => setShowRules(false)}
+                            className="absolute top-3 right-3 z-[1010] bg-black/60 text-white rounded-full p-2 hover:scale-110 transition"
+                        >
+                            <X size={24} />
+                        </button>
+
+                        <div className="flex-1 overflow-y-auto">
+                            <PdfViewer file="/rules-kids.pdf" />
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <BottomNavbar />
         </div>
     );
 }
 
-function CtaButton({ mobile = false }: { mobile?: boolean }) {
+function CtaButton({ mobile = false, onRulesClick }: { mobile?: boolean, onRulesClick: () => void }) {
     return (
         <div className={`flex flex-col items-center group cursor-pointer 
             ${mobile ? 'scale-90 md:scale-110' : 'scale-100 origin-left'}`}>
 
             <div className="relative">
-                {/* Luồng sáng vàng phía sau */}
-                <div className="absolute top-[20%] left-[5%] w-[90%] h-[80%] bg-yellow-400 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+                <div
+                    className="absolute top-[20%] left-[5%] w-[90%] h-[80%] bg-yellow-400 rounded-full blur-2xl opacity-50 animate-pulse"></div>
 
                 <Link href="/register" className="block">
                     <div className="animate-cta-btn">
@@ -86,10 +120,12 @@ function CtaButton({ mobile = false }: { mobile?: boolean }) {
                 </Link>
             </div>
 
-            <Link href="/rules"
-                  className="shopee-bold underline underline-offset-4 mt-3 px-4 py-1 text-[16px] md:text-[22px] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)] hover:text-yellow-300 transition-colors">
+            <button
+                onClick={onRulesClick}
+                className="shopee-bold underline underline-offset-4 mt-3 px-4 py-1 text-[16px] md:text-[22px] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,1)] hover:text-yellow-300 transition-colors"
+            >
                 THỂ LỆ ĐIỀU KHOẢN
-            </Link>
+            </button>
         </div>
     )
 }
