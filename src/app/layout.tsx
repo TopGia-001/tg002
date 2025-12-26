@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TopGia",
-  description: "TopGia",
+  title: "TopGiaKids",
+  description: "TopGiaKids",
   icons: {
     icon: "/favicon-kids.jpeg",
     shortcut: "/favicon-kids.jpeg",
