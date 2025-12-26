@@ -34,6 +34,10 @@ export async function POST(request: Request) {
             return NextResponse.json({ status: "USED" }, { status: 400 });
         }
 
+        if (!["KIDS"].includes(codeData.brand)) {
+          return NextResponse.json({ status: "INVALID" }, { status: 404 });
+        }
+
         const { fullName, phone, dob, address } = body;
         await prisma.$transaction([
             prisma.rewardCode.update({
